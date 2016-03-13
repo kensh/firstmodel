@@ -1,0 +1,25 @@
+***(
+fmod BAG{X :: TRIV} is
+    sort Bag{X} .
+    subsort X$Elt < Bag{X} .
+    op empty : -> Bag{X} .
+    op _,_ : Bag{X} Bag{X} -> Bag{X} [assoc comm ] .
+endfm
+)
+
+
+fmod BAG{X :: TRIV} is
+    protecting NAT .
+    sorts Bag{X} NeBag{X} .
+    subsorts X$Elt < NeBag{X} < Bag{X} .
+    op mt : -> Bag{X} .
+    op __ : Bag{X} Bag{X} -> Bag{X} [assoc comm id: mt] .
+    op __ : Bag{X} NeBag{X} -> NeBag{X} [ditto] .
+    op occurrences : X$Elt Bag{X} -> Nat .
+
+    vars E E’ : X$Elt .
+    var S : Bag{X} .
+    eq occurrences(E, E S) = 1 + occurrences(E, S) .
+    eq occurrences(E, S) = 0 [owise] .
+endfm
+

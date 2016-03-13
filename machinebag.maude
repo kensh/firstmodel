@@ -1,0 +1,3 @@
+fmod MACHINEBAG is
+    pr BAG{Machineview} .
+endfm

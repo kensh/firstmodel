@@ -1,0 +1,3 @@
+fmod CONNECTION is
+    pr PAIR{Machineview,Machineview} .
+endfm

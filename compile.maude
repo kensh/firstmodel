@@ -1,0 +1,32 @@
+*** parameterized modules
+
+load bag.maude
+load pair.maude
+
+*** views
+*** some of followings may be overriding the system defined views .
+
+load machine.maude
+load machineview.maude
+
+
+*** concrete modules
+
+load machinebag.maude
+load connection
+
+*** test reduces
+
+***(
+var d : Nat .
+vars a b : Machine .
+red [a,b] .
+)
+
+
+
+
+
+
+
+quit
