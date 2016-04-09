@@ -16,8 +16,8 @@ load ./view/connection.maude
 
 *** collection
 
-load ./connections.maude
-load ./machines.maude
+load ./collection/connections.maude
+load ./collection/machines.maude
 
 
 
