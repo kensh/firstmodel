@@ -1,3 +1,0 @@
-fmod CONNECTIONBAG is
-    pr BAG{Connectionview} .
-endfm

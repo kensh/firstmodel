@@ -1,3 +1,0 @@
-view Connectionview from TRIV to CONNECTION is
-    sort Elt to Pair{Machineview, Machineview} .
-endv

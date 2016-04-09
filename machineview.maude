@@ -1,3 +1,0 @@
-view Machineview from TRIV to MACHINE is
-    sort Elt to Machine .
-endv
