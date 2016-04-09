@@ -1,0 +1,3 @@
+fmod MACHINES is
+    pr BAG{Machine} .
+endfm

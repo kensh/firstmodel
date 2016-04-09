@@ -1,0 +1,3 @@
+fmod CONNECTION is
+    pr PAIR{Machine, Machine} .
+endfm

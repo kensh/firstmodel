@@ -1,42 +1,49 @@
-load machine.maude
+*** parameterized modules
 
-load bag.maude
-load pair.maude
-
-load machineview.maude
-load connection.maude
-load connectionview.maude
+load ./abstract/bag.maude
+load ./abstract/pair.maude
 
 
+*** machine
+ 
+load ./concrete/machine.maude
+load ./view/machine.maude
 
-load machinebag.maude
-load connectionbag.maude
+*** connection
+
+load ./concrete/connection.maude
+load ./view/connection.maude
+
+*** collection
+
+load ./connections.maude
+load ./machines.maude
+
 
 mod CHEF is
- pr MACHINEBAG .
+ pr MACHINES .
  pr CONNECTION .
  pr MACHINE .
  sort chef .
  
- op con__ : Machine Machine -> Pair{Machineview, Machineview} .
+ op con__ : Machine Machine -> Pair{Machine, Machine} .
  
-  
 endm
 
 
 mod REAL is
- pr CONNECTIONBAG .
- pr MACHINEBAG .
+ pr CONNECTIONS .
+ pr MACHINES .
  sort Real . 
  
- op r : Bag{Machineview} Bag{Connectionview} -> Real [ctor] .
+ op r : Bag{Machine} Bag{Connection} -> Real [ctor] .
  op add : Machine Real -> Real .
  op con : Machine Machine Real -> Real .
 
  vars X Y : Machine .
  var R : Real .
- var B : Bag{Machineview} .
- var C : Bag{Connectionview} .
+ var B : Bag{Machine} .
+ var C : Bag{Connection} .
 
  eq add(X, r(B,C)) = r(X B, C) .  
  eq con(X,Y, r(B,C)) = r(B, [X,Y] C) .
@@ -46,3 +53,5 @@ endm
 red [db(1),ap(3)] .
 red add(db(1) , r(ap(1) ap(2), [ap(1),ap(2)])) .
 red con(db(1),ap(1), r(db(1) ap(1), mt)) .
+
+quit

@@ -1,0 +1,3 @@
+fmod CONNECTIONS is
+    pr BAG{Connection} .
+endfm

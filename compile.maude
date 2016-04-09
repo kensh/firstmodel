@@ -1,19 +1,25 @@
 *** parameterized modules
 
-load bag.maude
-load pair.maude
-
-*** views
-*** some of followings may be overriding the system defined views .
-
-load machine.maude
-load machineview.maude
+load ./abstract/bag.maude
+load ./abstract/pair.maude
 
 
-*** concrete modules
+*** machine
+ 
+load ./concrete/machine.maude
+load ./view/machine.maude
 
-load machinebag.maude
-load connection
+*** connection
+
+load ./concrete/connection.maude
+load ./view/connection.maude
+
+*** collection
+
+load ./connections.maude
+load ./machines.maude
+
+
 
 *** test reduces
 

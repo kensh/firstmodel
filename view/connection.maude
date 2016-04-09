@@ -1,0 +1,3 @@
+view Connection from TRIV to CONNECTION is
+    sort Elt to Pair{Machine, Machine} .
+endv
