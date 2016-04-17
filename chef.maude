@@ -1,30 +1,10 @@
-*** parameterized modules
-
-load ./abstract/bag.maude
-load ./abstract/pair.maude
+load ./compile.maude
 
 
-*** machine
- 
-load ./concrete/machine.maude
-load ./view/machine.maude
-
-*** connection
-
-load ./concrete/connection.maude
-load ./view/connection.maude
-
-*** collection
-
-load ./collection/connections.maude
-load ./collection/machines.maude
-
-
-mod CHEF is
+mod VIRTUAL is
+ pr CONNECTIONS .
  pr MACHINES .
- pr CONNECTION .
- pr MACHINE .
- sort chef .
+ sort Virtual .
  
  op con__ : Machine Machine -> Pair{Machine, Machine} .
  
@@ -42,16 +22,40 @@ mod REAL is
 
  vars X Y : Machine .
  var R : Real .
- var B : Bag{Machine} .
+ var M : Bag{Machine} .
  var C : Bag{Connection} .
 
- eq add(X, r(B,C)) = r(X B, C) .  
- eq con(X,Y, r(B,C)) = r(B, [X,Y] C) .
+ eq add(X, r(M,C)) = r(X M, C) .  
+ eq con(X,Y, r(M,C)) = r(M, [X,Y] C) .
 
 endm
+
+
+mod CHEF is
+ pr VIRTUAL .
+ pr REAL .
+ pr NAT .
+ sort Chef .
+ subsorts Chef < Real Virtual . 
+
+ op c : Real -> Chef [ctor] .
+ op test : Nat -> Nat .
+
+ var X : Nat .
+ eq test(X) = 10 .
+ 
+*** rl [dq2] : (pc[I]: ds) (queue: Q) (tmp[I]: R) => (pc[I]: rs) (queue: R) (tmp[I]: R) . 
+endm
+
+select CHEF .
+
+red c(r(db(1) ap(1), mt)).
 
 red [db(1),ap(3)] .
 red add(db(1) , r(ap(1) ap(2), [ap(1),ap(2)])) .
 red con(db(1),ap(1), r(db(1) ap(1), mt)) .
+
+select CHEF .
+red test(19) .
 
 quit

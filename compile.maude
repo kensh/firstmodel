@@ -19,20 +19,3 @@ load ./view/connection.maude
 load ./collection/connections.maude
 load ./collection/machines.maude
 
-
-
-*** test reduces
-
-***(
-var d : Nat .
-vars a b : Machine .
-red [a,b] .
-)
-
-
-
-
-
-
-
-quit
