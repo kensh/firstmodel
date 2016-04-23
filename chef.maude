@@ -35,7 +35,6 @@ endm
 mod CHEF is
  pr VIRTUAL .
  pr REAL .
- pr NAT .
  sort Chef .
  sort State .
 
@@ -46,31 +45,25 @@ mod CHEF is
  op alive : -> State [ctor] .
 
  op chef : State Virtual Real -> Chef [ctor] .
- op test : Nat -> Nat .
-
- var X : Nat .
- eq test(X) = 10 .
- 
-****rl [dq2] : (pc[I]: ds) (queue: Q) (tmp[I]: R) => (pc[I]: rs) (queue: R) (tmp[I]: R) . 
-
-***  rl [rule1] : (pc[I]: ds) (queue: Q) (tmp[I]: R) => (pc[I]: rs) (queue: R) (tmp[I]: R) .
 
  var S : State .
  var V : Virtual .
  var R : Real .
- var total : Nat .
-
+ var C : Bag{Connection} .
+ var M : Bag{Machine} .
+ 
 
  rl [alive] : chef(initial, V, R) =>  chef(alive, V, R) .
- rl [add_real] : chef(alive, V, r(ap(1) db(1),[ap(1),db(1)]) ) => chef(alive, V, add(ap(2), r(ap(1) db(1),[ap(1),db(1)])) ) .
+ rl [add_real] : chef(alive, V, r(M, C) ) => chef(alive, V, add(ap(2), r(M, C) )) .
+ rl [con_real] :  chef(alive, V, r(M ap(2) db(1) , C)) => chef(alive, V, r(M ap(2) db(1) , C [ap(2),db(1)])) .  
 
 
 endm
 
 select CHEF .
 
-search [1] in CHEF : chef(initial, v(0) , r(ap(1) db(1),[ap(1),db(1)]) ) =>+  chef(alive, v(0) , r(ap(1) ap(2) db(1),[ap(1),db(1)]) ) .
-*** show path 1 .
+search [1] in CHEF : chef(initial, v(0) , r(ap(1) db(1),[ap(1),db(1)]) ) =>+  chef(alive, v(0) , r(ap(1) ap(2) db(1),[ap(1),db(1)] [ap(2),db(1)]) ) .
+show path 4 .
 
 
 *** rewrite [3] in CHEF : chef (initial, v(123), r(ap(1) db(1),[ap(1),db(1)]) .
@@ -84,8 +77,6 @@ red [db(1),ap(3)] .
 red add(db(1) , r(ap(1) ap(2), [ap(1),ap(2)])) .
 red con(db(1),ap(1), r(db(1) ap(1), mt)) .
 
-select CHEF .
-red test(19) .
 )***
 
 quit
