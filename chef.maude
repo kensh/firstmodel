@@ -5,9 +5,19 @@ mod VIRTUAL is
  pr CONNECTIONS .
  pr MACHINES .
  sort Virtual .
- 
- op v : Nat -> Virtual [ctor] .
- op con__ : Machine Machine -> Pair{Machine, Machine} .
+
+ op v : Bag{Machine} Bag{Connection} -> Virtual [ctor] .
+ op add : Machine Virtual -> Virtual .
+ op con : Pair{Machine, Machine} Virtual -> Virtual .
+
+ vars X Y : Machine .
+ var V : Virtual .
+ var MS : Bag{Machine} .
+ var CS : Bag{Connection} .
+ var C : Pair{Machine, Machine} .
+
+ eq add(X, v(MS,CS)) = v(X MS, CS) .  
+ eq con(C, v(MS,CS)) = v(MS, C CS) .
  
 endm
 
@@ -19,15 +29,16 @@ mod REAL is
  
  op r : Bag{Machine} Bag{Connection} -> Real [ctor] .
  op add : Machine Real -> Real .
- op con : Machine Machine Real -> Real .
+ op con : Pair{Machine, Machine} Real -> Real .
 
  vars X Y : Machine .
  var R : Real .
- var M : Bag{Machine} .
- var C : Bag{Connection} .
+ var MS : Bag{Machine} .
+ var CS : Bag{Connection} .
+ var C : Pair{Machine, Machine} .
 
- eq add(X, r(M,C)) = r(X M, C) .  
- eq con(X,Y, r(M,C)) = r(M, [X,Y] C) .
+ eq add(X, r(MS,CS)) = r(X MS, CS) .  
+ eq con(C, r(MS,CS)) = r(MS, C CS) .
 
 endm
 
@@ -38,32 +49,39 @@ mod CHEF is
  sort Chef .
  sort State .
 
- subsorts Chef < Real Virtual . 
+ *** subsorts Chef < Real Virtual . 
 
  op initial : -> State [ctor] .
  op terminal : -> State [ctor] .
  op alive : -> State [ctor] .
 
- op chef : State Virtual Real -> Chef [ctor] .
+ op chef : Virtual Real Bag{Machine} Bag{Machine} Bag{Connection} -> Chef [ctor] .
 
  var S : State .
  var V : Virtual .
  var R : Real .
- var C : Bag{Connection} .
- var M : Bag{Machine} .
+ vars CSV CSR CSVP  : Bag{Connection} . *** CSVP is receipe
+ vars MSV MSR MSVP MSRP : Bag{Machine} .
+ vars M X Y : Machine .
+ var C : Pair{Machine, Machine} .
+
+ *** rl [alive] : chef(initial, V, R, MSVP, MSRP, CSVP) =>  chef(alive, V, R, MSVP, MSRP, CSVP) .
+ rl [mac_real] : chef(V, r(MSR, CSV), MSVP, M MSRP, CSVP) => chef(V, r(M MSR, CSV), MSVP, MSRP, CSVP) .
+ rl [mac_virt] : chef(v(MSV, CSV), R, M MSVP, MSRP, CSVP) => chef(v(M MSV, CSV), R, MSVP, MSRP, CSVP) . 
+ rl [con_virt] : chef(v(MSV, CSV), R, MSVP, MSRP, C CSVP) => chef(v(MSV, C CSV), R, MSVP, MSRP, CSVP) .
+ 
+ rl [con_real] : chef(v(MSV, [X, Y] CSV), r(Y MSR, CSR), MSVP, MSRP, CSVP)  
+=> chef(v(MSV, [X, Y] CSV), r(Y MSR, [X, Y] CSR), MSVP, MSRP, CSVP) .
  
 
- rl [alive] : chef(initial, V, R) =>  chef(alive, V, R) .
- rl [add_real] : chef(alive, V, r(M, C) ) => chef(alive, V, add(ap(2), r(M, C) )) .
- rl [con_real] :  chef(alive, V, r(M ap(2) db(1) , C)) => chef(alive, V, r(M ap(2) db(1) , C [ap(2),db(1)])) .  
-
+*** rl [terminal] : chef(alive, V, R, mt) => chef(terminal, V, R, mt) .
 
 endm
 
 select CHEF .
 
-search [1] in CHEF : chef(initial, v(0) , r(ap(1) db(1),[ap(1),db(1)]) ) =>+  chef(alive, v(0) , r(ap(1) ap(2) db(1),[ap(1),db(1)] [ap(2),db(1)]) ) .
-show path 4 .
+search [1] in CHEF : chef(v(ap(1) db(1), [ap(1), db(1)]) , r(ap(1) db(1),[ap(1), db(1)]), ap(2), ap(2), [ap(2), db(1)]) =>*  chef(v(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]) , r(ap(1) ap(2) db(1), [ap(1),db(1)] [ap(2),db(1)]), mt, mt, mt) .
+*** show path 4 .
 
 
 *** rewrite [3] in CHEF : chef (initial, v(123), r(ap(1) db(1),[ap(1),db(1)]) .

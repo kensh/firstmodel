@@ -21,5 +21,6 @@ fmod BAG{X :: TRIV} is
     var S : Bag{X} .
     eq occurrences(E, E S) = 1 + occurrences(E, S) .
     eq occurrences(E, S) = 0 [owise] .
+    *** ceq S S = S if not ( S == mt ) .
 endfm
 
