@@ -7,8 +7,8 @@ mod VIRTUAL is
  sort Virtual .
 
  op v : Bag{Machine} Bag{Connection} -> Virtual [ctor] .
- op add : Machine Virtual -> Virtual .
- op con : Pair{Machine, Machine} Virtual -> Virtual .
+ *** op add : Machine Virtual -> Virtual .
+ *** op con : Pair{Machine, Machine} Virtual -> Virtual .
 
  vars X Y : Machine .
  var V : Virtual .
@@ -16,8 +16,8 @@ mod VIRTUAL is
  var CS : Bag{Connection} .
  var C : Pair{Machine, Machine} .
 
- eq add(X, v(MS,CS)) = v(X MS, CS) .  
- eq con(C, v(MS,CS)) = v(MS, C CS) .
+***  eq add(X, v(MS,CS)) = v(X MS, CS) .  
+***  eq con(C, v(MS,CS)) = v(MS, C CS) .
  
 endm
 
@@ -28,8 +28,8 @@ mod REAL is
  sort Real . 
  
  op r : Bag{Machine} Bag{Connection} -> Real [ctor] .
- op add : Machine Real -> Real .
- op con : Pair{Machine, Machine} Real -> Real .
+ *** op add : Machine Real -> Real .
+ *** op con : Pair{Machine, Machine} Real -> Real .
 
  vars X Y : Machine .
  var R : Real .
@@ -37,54 +37,78 @@ mod REAL is
  var CS : Bag{Connection} .
  var C : Pair{Machine, Machine} .
 
- eq add(X, r(MS,CS)) = r(X MS, CS) .  
- eq con(C, r(MS,CS)) = r(MS, C CS) .
+ *** eq add(X, r(MS,CS)) = r(X MS, CS) .  
+ *** eq con(C, r(MS,CS)) = r(MS, C CS) .
 
 endm
+
+***(
+mod QLOCK is pr LABEL . pr PID . pr QUEUE .
+ sorts Var Sys . 
+ subsort Var < Sys .
+ op _ _ : Sys Sys -> Sys [assoc comm] .
+ op pc[_]:_ : Pid Label -> Var .
+ op queue:_ : Queue -> Var .
+ op tmp[_]:_ : Pid Queue -> Var .
+ vars Q R : Queue . 
+ var I : Pid .
+ rl [eq1] : (pc[I]: rs) (queue: Q) (tmp[I]: R) => (pc[I]: es) (queue: Q) (tmp[I]: enq(Q,I)) .
+ rl [eq2] : (pc[I]: es) (queue: Q) (tmp[I]: R) => (pc[I]: ws) (queue: R) (tmp[I]: R) .
+ crl [wt] : (pc[I]: ws) (queue: Q)             => (pc[I]: cs) (queue: Q) if top(Q) == I .
+ rl [dq1] : (pc[I]: cs) (queue: Q) (tmp[I]: R) => (pc[I]: ds) (queue: Q) (tmp[I]: deq(Q)) .
+ rl [dq2] : (pc[I]: ds) (queue: Q) (tmp[I]: R) => (pc[I]: rs) (queue: R) (tmp[I]: R) . 
+endm
+)***
 
 
 mod CHEF is
  pr VIRTUAL .
  pr REAL .
  sort Chef .
- sort State .
+ sort Env .
+ sort Label .
+ sorts Var Sys .
+ subsort Var < Sys .
+ subsorts Virtual Real < Env .
 
- *** subsorts Chef < Real Virtual . 
+ op deploy : -> Label [ctor] .
+ op recipe : -> Label [ctor] .
 
- op initial : -> State [ctor] .
- op terminal : -> State [ctor] .
- op alive : -> State [ctor] .
+ op _ _ : Sys Sys -> Sys [assoc comm] .
+ op _ : Env -> Var .
+ op _:_ : Bag{Machine} Label -> Var .
+ op _:_ : Bag{Connection} Label -> Var .
 
  op chef : Virtual Real Bag{Machine} Bag{Machine} Bag{Connection} -> Chef [ctor] .
 
- var S : State .
  var V : Virtual .
  var R : Real .
- vars CSV CSR CSVP  : Bag{Connection} . *** CSVP is receipe
- vars MSV MSR MSVP MSRP : Bag{Machine} .
+ vars CSV CSR CSVP CS : Bag{Connection} . *** CSVP is receipe
+ vars MSV MSR MSVP MSRP MS : Bag{Machine} .
  vars M X Y : Machine .
  var C : Pair{Machine, Machine} .
 
- *** rl [alive] : chef(initial, V, R, MSVP, MSRP, CSVP) =>  chef(alive, V, R, MSVP, MSRP, CSVP) .
- rl [mac_real] : chef(V, r(MSR, CSV), MSVP, M MSRP, CSVP) => chef(V, r(M MSR, CSV), MSVP, MSRP, CSVP) .
+***(
+ rl [mac_real] : r(MSR, CSR) (M MSRP) => r(M MSR, CSR) MSRP .
+ rl [mac_virt] : v(MSV, CSV) (M MSVP) => v(M MSV, CSV) MSVP .
+ rl [con_real] : v(MSV, CSV) (C CSVP) => v(MSV, C CSV) CSVP .
+ rl [con_virt] : v(MSV, [X, Y] CSV) 
+)***
+ rl [mac_real] : chef(V, r(MSR, CSR), MSVP, M MSRP, CSVP) => chef(V, r(M MSR, CSR), MSVP, MSRP, CSVP) .
  rl [mac_virt] : chef(v(MSV, CSV), R, M MSVP, MSRP, CSVP) => chef(v(M MSV, CSV), R, MSVP, MSRP, CSVP) . 
  rl [con_virt] : chef(v(MSV, CSV), R, MSVP, MSRP, C CSVP) => chef(v(MSV, C CSV), R, MSVP, MSRP, CSVP) .
  
- rl [con_real] : chef(v(MSV, [X, Y] CSV), r(Y MSR, CSR), MSVP, MSRP, CSVP)  
-=> chef(v(MSV, [X, Y] CSV), r(Y MSR, [X, Y] CSR), MSVP, MSRP, CSVP) .
- 
+ crl [con_real] : chef(v(MSV, [X, Y] CSV), r(X Y MSR, CSR), MSVP, MSRP, CSVP) => chef(v(MSV, [X, Y] CSV), r(X Y MSR, [X, Y] CSR), MSVP, MSRP, CSVP) if occurrences([X, Y], CSR) == 0 .
 
-*** rl [terminal] : chef(alive, V, R, mt) => chef(terminal, V, R, mt) .
 
 endm
 
 select CHEF .
 
 search [1] in CHEF : chef(v(ap(1) db(1), [ap(1), db(1)]) , r(ap(1) db(1),[ap(1), db(1)]), ap(2), ap(2), [ap(2), db(1)]) =>*  chef(v(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]) , r(ap(1) ap(2) db(1), [ap(1),db(1)] [ap(2),db(1)]), mt, mt, mt) .
-*** show path 4 .
+  show path 9 .
 
 
-*** rewrite [3] in CHEF : chef (initial, v(123), r(ap(1) db(1),[ap(1),db(1)]) .
 
 
 
