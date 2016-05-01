@@ -6,18 +6,7 @@ mod VIRTUAL is
  pr MACHINES .
  sort Virtual .
 
- op v : Bag{Machine} Bag{Connection} -> Virtual [ctor] .
- *** op add : Machine Virtual -> Virtual .
- *** op con : Pair{Machine, Machine} Virtual -> Virtual .
-
- vars X Y : Machine .
- var V : Virtual .
- var MS : Bag{Machine} .
- var CS : Bag{Connection} .
- var C : Pair{Machine, Machine} .
-
-***  eq add(X, v(MS,CS)) = v(X MS, CS) .  
-***  eq con(C, v(MS,CS)) = v(MS, C CS) .
+ op virt : Bag{Machine} Bag{Connection} -> Virtual [ctor] .
  
 endm
 
@@ -27,98 +16,41 @@ mod REAL is
  pr MACHINES .
  sort Real . 
  
- op r : Bag{Machine} Bag{Connection} -> Real [ctor] .
- *** op add : Machine Real -> Real .
- *** op con : Pair{Machine, Machine} Real -> Real .
-
- vars X Y : Machine .
- var R : Real .
- var MS : Bag{Machine} .
- var CS : Bag{Connection} .
- var C : Pair{Machine, Machine} .
-
- *** eq add(X, r(MS,CS)) = r(X MS, CS) .  
- *** eq con(C, r(MS,CS)) = r(MS, C CS) .
+ op real : Bag{Machine} Bag{Connection} -> Real [ctor] .
 
 endm
-
-***(
-mod QLOCK is pr LABEL . pr PID . pr QUEUE .
- sorts Var Sys . 
- subsort Var < Sys .
- op _ _ : Sys Sys -> Sys [assoc comm] .
- op pc[_]:_ : Pid Label -> Var .
- op queue:_ : Queue -> Var .
- op tmp[_]:_ : Pid Queue -> Var .
- vars Q R : Queue . 
- var I : Pid .
- rl [eq1] : (pc[I]: rs) (queue: Q) (tmp[I]: R) => (pc[I]: es) (queue: Q) (tmp[I]: enq(Q,I)) .
- rl [eq2] : (pc[I]: es) (queue: Q) (tmp[I]: R) => (pc[I]: ws) (queue: R) (tmp[I]: R) .
- crl [wt] : (pc[I]: ws) (queue: Q)             => (pc[I]: cs) (queue: Q) if top(Q) == I .
- rl [dq1] : (pc[I]: cs) (queue: Q) (tmp[I]: R) => (pc[I]: ds) (queue: Q) (tmp[I]: deq(Q)) .
- rl [dq2] : (pc[I]: ds) (queue: Q) (tmp[I]: R) => (pc[I]: rs) (queue: R) (tmp[I]: R) . 
-endm
-)***
-
 
 mod CHEF is
  pr VIRTUAL .
  pr REAL .
  sort Chef .
  sort Env .
- sort Label .
  sorts Var Sys .
  subsort Var < Sys .
  subsorts Virtual Real < Env .
 
- op deploy : -> Label [ctor] .
- op recipe : -> Label [ctor] .
-
  op _ _ : Sys Sys -> Sys [assoc comm] .
- op _ : Env -> Var .
- op _:_ : Bag{Machine} Label -> Var .
- op _:_ : Bag{Connection} Label -> Var .
+ op env : Env -> Var .
+ op ms : Bag{Machine} -> Var .
+ op cs : Bag{Connection} -> Var .
 
- op chef : Virtual Real Bag{Machine} Bag{Machine} Bag{Connection} -> Chef [ctor] .
-
- var V : Virtual .
- var R : Real .
- vars CSV CSR CSVP CS : Bag{Connection} . *** CSVP is receipe
- vars MSV MSR MSVP MSRP MS : Bag{Machine} .
+ vars CSV CSR CSVP : Bag{Connection} . *** CSVP is receipe
+ vars MSV MSR MSVP MSRP : Bag{Machine} .
  vars M X Y : Machine .
  var C : Pair{Machine, Machine} .
 
-***(
- rl [mac_real] : r(MSR, CSR) (M MSRP) => r(M MSR, CSR) MSRP .
- rl [mac_virt] : v(MSV, CSV) (M MSVP) => v(M MSV, CSV) MSVP .
- rl [con_real] : v(MSV, CSV) (C CSVP) => v(MSV, C CSV) CSVP .
- rl [con_virt] : v(MSV, [X, Y] CSV) 
-)***
- rl [mac_real] : chef(V, r(MSR, CSR), MSVP, M MSRP, CSVP) => chef(V, r(M MSR, CSR), MSVP, MSRP, CSVP) .
- rl [mac_virt] : chef(v(MSV, CSV), R, M MSVP, MSRP, CSVP) => chef(v(M MSV, CSV), R, MSVP, MSRP, CSVP) . 
- rl [con_virt] : chef(v(MSV, CSV), R, MSVP, MSRP, C CSVP) => chef(v(MSV, C CSV), R, MSVP, MSRP, CSVP) .
- 
- crl [con_real] : chef(v(MSV, [X, Y] CSV), r(X Y MSR, CSR), MSVP, MSRP, CSVP) => chef(v(MSV, [X, Y] CSV), r(X Y MSR, [X, Y] CSR), MSVP, MSRP, CSVP) if occurrences([X, Y], CSR) == 0 .
-
+ rl  [mac_real] : env(real(MSR, CSR)) ms(M MSRP) => env(real(M MSR, CSR)) ms(MSRP) .
+ rl  [mac_virt] : env(virt(MSV, CSV)) ms(M MSVP) => env(virt(M MSV, CSV)) ms(MSVP) .
+ rl  [con_virt] : env(virt(MSV, CSV)) cs(C CSVP) => env(virt(MSV, C CSV)) cs(CSVP) .
+ crl [con_real] : env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, CSR)) => env(virt(MSV, [X, Y] CSR)) env(real(X Y MSR, [X, Y] CSR)) if occurrences([X, Y], CSR) == 0 .
 
 endm
 
 select CHEF .
 
-search [1] in CHEF : chef(v(ap(1) db(1), [ap(1), db(1)]) , r(ap(1) db(1),[ap(1), db(1)]), ap(2), ap(2), [ap(2), db(1)]) =>*  chef(v(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]) , r(ap(1) ap(2) db(1), [ap(1),db(1)] [ap(2),db(1)]), mt, mt, mt) .
-  show path 9 .
+search [1] in CHEF : env(virt(ap(1) db(1), [ap(1), db(1)])) env(real(ap(1) db(1),[ap(1), db(1)])) ms(ap(2)) ms(ap(2)) cs([ap(2), db(1)]) =>* env(virt(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)])) env(real(ap(1) ap(2) db(1),[ap(1), db(1)] [ap(2), db(1)])) ms(mt) ms(mt) cs(mt) . 
 
+show path 14 .
 
-
-
-
-***(
-red c(initial, v(111), r(db(1) ap(1), mt) ).
-
-red [db(1),ap(3)] .
-red add(db(1) , r(ap(1) ap(2), [ap(1),ap(2)])) .
-red con(db(1),ap(1), r(db(1) ap(1), mt)) .
-
-)***
 
 quit
