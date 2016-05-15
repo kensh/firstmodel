@@ -42,13 +42,27 @@ mod CHEF is
  rl  [mac_real] : env(real(MSR, CSR)) ms(M MSRP) => env(real(M MSR, CSR)) ms(MSRP) .
  rl  [mac_virt] : env(virt(MSV, CSV)) ms(M MSVP) => env(virt(M MSV, CSV)) ms(MSVP) .
  rl  [con_virt] : env(virt(MSV, CSV)) cs(C CSVP) => env(virt(MSV, C CSV)) cs(CSVP) .
- crl [con_real] : env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, CSR)) => env(virt(MSV, [X, Y] CSR)) env(real(X Y MSR, [X, Y] CSR)) if occurrences([X, Y], CSR) == 0 .
+ crl [con_real] : env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, CSR))
+               => env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, [X, Y] CSR))
+                  if occurrences([X, Y], CSR) == 0 .
 
 endm
 
 select CHEF .
 
-search [1] in CHEF : env(virt(ap(1) db(1), [ap(1), db(1)])) env(real(ap(1) db(1),[ap(1), db(1)])) ms(ap(2)) ms(ap(2)) cs([ap(2), db(1)]) =>* env(virt(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)])) env(real(ap(1) ap(2) db(1),[ap(1), db(1)] [ap(2), db(1)])) ms(mt) ms(mt) cs(mt) . 
+search [1] in CHEF : 
+ env(virt(ap(1) db(1), [ap(1), db(1)]))
+ env(real(ap(1) db(1),[ap(1), db(1)])) 
+ ms(ap(2)) 
+ ms(ap(2)) 
+ cs([ap(2), db(1)]) 
+=>* 
+ env(virt(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]))
+ env(real(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]))
+ ms(mt) 
+ ms(mt)
+ cs(mt) .
+ 
 
 show path 14 .
 
