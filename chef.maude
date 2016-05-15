@@ -29,19 +29,19 @@ mod CHEF is
  subsort Var < Sys .
  subsorts Virtual Real < Env .
 
- op _ _ : Sys Sys -> Sys [assoc comm] .
- op env : Env -> Var .
- op ms : Bag{Machine} -> Var .
- op cs : Bag{Connection} -> Var .
+ op  _ _ : Sys Sys -> Sys [assoc comm] .
+ op  env : Env -> Var .
+ ops msv msr : Bag{Machine} -> Var .
+ op  cs : Bag{Connection} -> Var .
 
- vars CSV CSR CSVP : Bag{Connection} . *** CSVP is receipe
- vars MSV MSR MSVP MSRP : Bag{Machine} .
+ vars CSV CSR RECIPE : Bag{Connection} . *** CSVP is receipe
+ vars MSV MSR MS : Bag{Machine} .
  vars M X Y : Machine .
- var C : Pair{Machine, Machine} .
+ var  C : Pair{Machine, Machine} .
 
- rl  [mac_real] : env(real(MSR, CSR)) ms(M MSRP) => env(real(M MSR, CSR)) ms(MSRP) .
- rl  [mac_virt] : env(virt(MSV, CSV)) ms(M MSVP) => env(virt(M MSV, CSV)) ms(MSVP) .
- rl  [con_virt] : env(virt(MSV, CSV)) cs(C CSVP) => env(virt(MSV, C CSV)) cs(CSVP) .
+ rl  [mac_real] : env(real(MSR, CSR)) msr(M MS) => env(real(M MSR, CSR)) msr(MS) .
+ rl  [mac_virt] : env(virt(MSV, CSV)) msv(M MS) => env(virt(M MSV, CSV)) msv(MS) .
+ rl  [con_virt] : env(virt(MSV, CSV)) cs(C RECIPE) => env(virt(MSV, C CSV)) cs(RECIPE) .
  crl [con_real] : env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, CSR))
                => env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, [X, Y] CSR))
                   if occurrences([X, Y], CSR) == 0 .
@@ -51,8 +51,28 @@ endm
 select CHEF .
 
 search [1] in CHEF : 
+ env(virt(ap(1) ap(3) db(1), [ap(1), db(1)] [ap(3), db(1)]))
+ env(real(ap(1) db(1), [ap(1), db(1)])) 
+ msv(ap(2) ap(4) ap(5) ap(6) ap(7)) 
+ msr(ap(2) ap(3) ap(4) ap(5)) 
+ cs([ap(2), db(1)] [ap(5), db(1)] [ap(6), db(1)]) 
+=>* 
+ env(virt(ap(1) ap(2) ap(3) ap(5) ap(6) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(5), db(1)] [ap(6), db(1)]))
+ env(real(ap(1) ap(2) ap(3) ap(5) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(5), db(1)]))
+ msv(ap(4) ap(7)) 
+ msr(ap(4))
+ cs(mt) .
+
+
+
+
+
+
+
+***(
+search [1] in CHEF : 
  env(virt(ap(1) db(1), [ap(1), db(1)]))
- env(real(ap(1) db(1),[ap(1), db(1)])) 
+ env(real(ap(1) db(1), [ap(1), db(1)])) 
  ms(ap(2)) 
  ms(ap(2)) 
  cs([ap(2), db(1)]) 
@@ -65,6 +85,6 @@ search [1] in CHEF :
  
 
 show path 14 .
-
+)***
 
 quit
