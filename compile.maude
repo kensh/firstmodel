@@ -19,3 +19,7 @@ load ./view/connection.maude
 load ./collection/connections.maude
 load ./collection/machines.maude
 
+*** environment
+
+load ./var/real.maude
+load ./var/virtual.maude
