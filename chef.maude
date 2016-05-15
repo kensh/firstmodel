@@ -1,25 +1,5 @@
 load ./compile.maude
 
-
-mod VIRTUAL is
- pr CONNECTIONS .
- pr MACHINES .
- sort Virtual .
-
- op virt : Bag{Machine} Bag{Connection} -> Virtual [ctor] .
- 
-endm
-
-
-mod REAL is
- pr CONNECTIONS .
- pr MACHINES .
- sort Real . 
- 
- op real : Bag{Machine} Bag{Connection} -> Real [ctor] .
-
-endm
-
 mod CHEF is
  pr VIRTUAL .
  pr REAL .

@@ -1,0 +1,8 @@
+mod VIRTUAL is
+ pr CONNECTIONS .
+ pr MACHINES .
+ sort Virtual .
+
+ op virt : Bag{Machine} Bag{Connection} -> Virtual [ctor] .
+ 
+endm

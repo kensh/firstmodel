@@ -1,0 +1,8 @@
+mod REAL is
+ pr CONNECTIONS .
+ pr MACHINES .
+ sort Real . 
+ 
+ op real : Bag{Machine} Bag{Connection} -> Real [ctor] .
+
+endm
