@@ -67,8 +67,6 @@ search [1] in CHEF :
 
 
 
-
-
 ***(
 search [1] in CHEF : 
  env(virt(ap(1) db(1), [ap(1), db(1)]))
