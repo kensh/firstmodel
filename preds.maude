@@ -1,13 +1,23 @@
 load ./chef.maude
+in model-checker.maude .
 
 mod PREDS is
  pr CHEF .
  inc SATISFACTION .
  subsort Sys < State .
  
- ops convergent -> Prop .
+ ops convergent : -> Prop .
  
  var S : Sys .
- eq (pc[P] : cs) S |= crit(P) = true .
+
+ vars CSV CSR RECIPE : Bag{Connection} .
+ vars MSV MSR MS : Bag{Machine} .
+ vars M X Y : Machine .
+ var  C : Pair{Machine, Machine} .
+
+
+ eq  env(real(MSR, RECIPE)) cs(RECIPE) S |= convergent = true .
 
 endm
+
+quit .
