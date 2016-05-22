@@ -1,7 +1,14 @@
+load ./preds.maude
+
 mod CHECK is
+ pr INIT .
  inc PREDS .
  inc MODEL-CHECKER .
  inc LTL-SIMPLIFIER .
  ops convergent : -> Formula .
- eq convergent = ([] ~(crit(p1) /\ crit(p2))) .
+ eq convergent = (<> ([] cooked)) .
 endm
+
+red in CHECK : modelCheck(init,convergent) .
+
+quit .

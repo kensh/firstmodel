@@ -1,4 +1,5 @@
 load ./chef.maude
+load ./init.maude
 in model-checker.maude .
 
 mod PREDS is
@@ -20,4 +21,3 @@ mod PREDS is
 
 endm
 
-quit .
