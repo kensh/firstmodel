@@ -5,18 +5,18 @@ select CHEF .
 search [1] in CHEF : 
  env(virt(ap(1) ap(3) db(1), [ap(2), db(1)]))
  env(real(ap(1) db(1), [ap(1), db(1)])) 
- msv(ap(2) ap(4) ap(5) ap(6) ap(7)) 
- msr(ap(2) ap(3) ap(5) ap(6)) 
- cs([ap(2), db(1)] [ap(5), db(1)] [ap(6), db(1)]) 
+ msv(ap(2) ap(4)) 
+ msr(ap(2) ap(3) ap(4)) 
+ cs([ap(2), db(1)] [ap(3), db(1)]) 
 =>* 
- env(virt(ap(1) ap(2) ap(3) ap(5) ap(6) db(1), [ap(2), db(1)] [ap(5), db(1)] [ap(6), db(1)]))
- env(real(ap(1) ap(2) ap(5) ap(6) db(1), [ap(2), db(1)] [ap(5), db(1)] [ap(6), db(1)]))
- msv(ap(4) ap(7)) 
- msr(ap(3))
- cs([ap(2), db(1)] [ap(5), db(1)] [ap(6), db(1)]) .
+ env(virt(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)]))
+ env(real(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)]))
+ msv(mt) 
+ msr(mt)
+ cs([ap(2), db(1)] [ap(3), db(1)]) .
 
 
-
+quit .
 
 
 
