@@ -6,7 +6,7 @@ mod PREDS is
  inc SATISFACTION .
  subsort Sys < State .
  
- ops convergent : -> Prop .
+ ops cooked : -> Prop .
  
  var S : Sys .
 
@@ -16,7 +16,7 @@ mod PREDS is
  var  C : Pair{Machine, Machine} .
 
 
- eq  env(real(MSR, RECIPE)) cs(RECIPE) S |= convergent = true .
+ eq  env(real(MSR, RECIPE)) cs(RECIPE) S |= cooked = true .
 
 endm
 

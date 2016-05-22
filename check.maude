@@ -1,0 +1,7 @@
+mod CHECK is
+ inc PREDS .
+ inc MODEL-CHECKER .
+ inc LTL-SIMPLIFIER .
+ ops convergent : -> Formula .
+ eq convergent = ([] ~(crit(p1) /\ crit(p2))) .
+endm
