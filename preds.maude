@@ -1,0 +1,14 @@
+load ./chef.maude
+
+mod PREDS is
+ pr CHEF .
+ inc SATISFACTION .
+ subsort Sys < State .
+ 
+ ops wait crit : Pid -> Prop .
+ var P : Pid .
+ var S : Sys .
+ eq (pc[P] : ws) S |= wait(P) = true .
+ eq (pc[P] : cs) S |= crit(P) = true .
+
+endm
