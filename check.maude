@@ -1,7 +1,10 @@
 load ./preds.maude
+load ./init.maude
+load ./bug.maude
 
 mod CHECK is
  pr INIT .
+ pr BUG . 
  inc PREDS .
  inc MODEL-CHECKER .
  inc LTL-SIMPLIFIER .
@@ -10,5 +13,6 @@ mod CHECK is
 endm
 
 red in CHECK : modelCheck(init,convergent) .
+red in CHECK : modelCheck(bug,convergent) .
 
 quit .
