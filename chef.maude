@@ -14,16 +14,20 @@ mod CHEF is
  ops msv msr : Bag{Machine} -> Var .
  op  cs : Bag{Connection} -> Var .
 
- vars CSV CSR RECIPE : Bag{Connection} . *** CSVP is receipe
+ vars CSV CSR RECIPE : Bag{Connection} .
  vars MSV MSR MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
  rl  [mac_real] : env(real(MSR, CSR)) msr(M MS) => env(real(M MSR, CSR)) msr(MS) .
  rl  [mac_virt] : env(virt(MSV, CSV)) msv(M MS) => env(virt(M MSV, CSV)) msv(MS) .
- rl  [con_virt] : env(virt(MSV, CSV)) cs(C RECIPE) => env(virt(MSV, C CSV)) cs(RECIPE) .
+ crl [con_virt] : env(virt(MSV, CSV)) cs(C RECIPE) => env(virt(MSV, C CSV)) cs(C RECIPE) 
+                  if occurrences(C, CSV) == 0 .
  crl [con_real] : env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, CSR))
                => env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, [X, Y] CSR))
                   if occurrences([X, Y], CSR) == 0 .
+ crl [con_del]  : env(virt(MSV, CSV)) env(real(MSR, C CSR))
+               => env(virt(MSV, CSV)) env(real(MSR, CSR))
+                  if occurrences(C, CSV) == 0 .
 
 endm
