@@ -1,4 +1,4 @@
-load ./preds.maude
+load ./pred/preds.maude
 load ./instance/init.maude
 load ./instance/bug.maude
 

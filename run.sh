@@ -1,0 +1,2 @@
+maude search
+maude check

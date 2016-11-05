@@ -1,4 +1,4 @@
-load ./model/chef.maude
+load ../model/chef.maude
 in model-checker.maude .
 
 mod PREDS is
