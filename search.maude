@@ -1,4 +1,4 @@
-load ./chef.maude
+load ./model/chef.maude
 
 select CHEF .
 

@@ -1,6 +1,6 @@
 load ./preds.maude
-load ./init.maude
-load ./bug.maude
+load ./instance/init.maude
+load ./instance/bug.maude
 
 mod CHECK is
  pr INIT .
