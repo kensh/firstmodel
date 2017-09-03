@@ -1,25 +1,25 @@
 *** parameterized modules
 
-load ../abstract/bag.maude
-load ../abstract/pair.maude
+load ../lib/abstract/bag.maude
+load ../lib/abstract/pair.maude
 
 
 *** machine
  
 load ../role/machine.maude
-load ../view/machine.maude
+load ../lib/view/machine.maude
 
 *** connection
 
 load ../role/connection.maude
-load ../view/connection.maude
+load ../lib/view/connection.maude
 
 *** collection
 
-load ../collection/connections.maude
-load ../collection/machines.maude
+load ../lib/collection/connections.maude
+load ../lib/collection/machines.maude
 
 *** environment
 
-load ../var/real.maude
-load ../var/config.maude
+load ../env/real.maude
+load ../env/config.maude
