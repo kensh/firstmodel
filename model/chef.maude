@@ -7,15 +7,16 @@ mod CHEF is
  sorts Var Sys .
  subsort Var < Sys .
  subsorts Config Real < Var .
+ subsorts  Connections Machines < Var .
 
  op  _ _ : Sys Sys -> Sys [assoc comm] .
- ops msv msr : Bag{Machine} -> Var .
- op  cs : Bag{Connection} -> Var .
+ ops msv msr : Machines -> Var .
+ op  cs : Connections -> Var .
 
- vars CSV CSR RECIPE : Bag{Connection} .
- vars MSV MSR MS : Bag{Machine} .
+ vars CSV CSR RECIPE : Connections .
+ vars MSV MSR MS : Machines .
  vars M X Y : Machine .
- var  C : Pair{Machine, Machine} .
+ var  C : Connection .
 
  rl  [ops_prv] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
  rl  [ops_add] : conf(MSV, CSV) msv(M MS) => conf(M MSV, CSV) msv(MS) .

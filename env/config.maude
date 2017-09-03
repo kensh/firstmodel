@@ -3,6 +3,6 @@ mod CONFIG is
  pr MACHINES .
  sort Config .
 
- op conf : Bag{Machine} Bag{Connection} -> Config [ctor] .
+ op conf : Machines Connections -> Config [ctor] .
  
 endm

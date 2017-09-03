@@ -1,3 +1,6 @@
 fmod CONNECTION is
     pr PAIR{Machine, Machine} .
+    sort Connection .
+
+    op c : -> Connection .
 endfm

@@ -3,6 +3,6 @@ mod REAL is
  pr MACHINES .
  sort Real . 
  
- op real : Bag{Machine} Bag{Connection} -> Real [ctor] .
+ op real : Machines Connections -> Real [ctor] .
 
 endm

@@ -1,3 +1,6 @@
 fmod CONNECTIONS is
     pr BAG{Connection} .
+    sort Connections .
+
+    op cs : -> Connections [ctor] .
 endfm

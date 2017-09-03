@@ -1,3 +1,8 @@
 fmod MACHINES is
     pr BAG{Machine} .
+    sort Machines .
+    subsort Machine < Machines .
+
+
+    op ms : -> Machines [ctor] .
 endfm

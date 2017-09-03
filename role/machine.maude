@@ -20,7 +20,8 @@ fmod MACHINE is
  pr AP .
  sort Machine .
  subsorts Db Ap < Machine .
- 
+
+ op m : -> Machine [ctor] . 
 endfm
 
 
