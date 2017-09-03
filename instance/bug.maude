@@ -1,7 +1,7 @@
 mod BUG is pr CHEF .
  op bug : -> Sys .
  eq bug = 
- virt(ap(1) db(1), [ap(1), db(1)])
+ conf(ap(1) db(1), [ap(1), db(1)])
  real(ap(1) db(1), [ap(1), db(1)])
  msv(ap(2) ap(3) ap(4)) 
  msr(ap(2) ap(3) ) 

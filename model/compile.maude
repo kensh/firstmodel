@@ -22,4 +22,4 @@ load ../collection/machines.maude
 *** environment
 
 load ../var/real.maude
-load ../var/virtual.maude
+load ../var/config.maude

@@ -1,12 +1,12 @@
 load ./compile.maude
 
 mod CHEF is
- pr VIRTUAL .
+ pr CONFIG .
  pr REAL .
  sort Chef .
  sorts Var Sys .
  subsort Var < Sys .
- subsorts Virtual Real < Var .
+ subsorts Config Real < Var .
 
  op  _ _ : Sys Sys -> Sys [assoc comm] .
  ops msv msr : Bag{Machine} -> Var .
@@ -18,14 +18,14 @@ mod CHEF is
  var  C : Pair{Machine, Machine} .
 
  rl  [ops_prv] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
- rl  [ops_add] : virt(MSV, CSV) msv(M MS) => virt(M MSV, CSV) msv(MS) .
- crl [ops_set] : virt(MSV, CSV) cs(C RECIPE) => virt(MSV, C CSV) cs(C RECIPE) 
+ rl  [ops_add] : conf(MSV, CSV) msv(M MS) => conf(M MSV, CSV) msv(MS) .
+ crl [ops_set] : conf(MSV, CSV) cs(C RECIPE) => conf(MSV, C CSV) cs(C RECIPE) 
                   if occurrences(C, CSV) == 0 .
- crl [config+] : virt(MSV, [X, Y] CSV) real(X Y MSR, CSR)
-               => virt(MSV, [X, Y] CSV) real(X Y MSR, [X, Y] CSR)
+ crl [config+] : conf(MSV, [X, Y] CSV) real(X Y MSR, CSR)
+               => conf(MSV, [X, Y] CSV) real(X Y MSR, [X, Y] CSR)
                   if occurrences([X, Y], CSR) == 0 .
- crl [config-] : virt(MSV, CSV) real(MSR, C CSR)
-               => virt(MSV, CSV) real(MSR, CSR)
+ crl [config-] : conf(MSV, CSV) real(MSR, C CSR)
+               => conf(MSV, CSV) real(MSR, CSR)
                   if occurrences(C, CSV) == 0 .
 
 endm

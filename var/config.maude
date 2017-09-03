@@ -1,8 +1,8 @@
-mod VIRTUAL is
+mod CONFIG is
  pr CONNECTIONS .
  pr MACHINES .
- sort Virtual .
+ sort Config .
 
- op virt : Bag{Machine} Bag{Connection} -> Virtual [ctor] .
+ op conf : Bag{Machine} Bag{Connection} -> Config [ctor] .
  
 endm
