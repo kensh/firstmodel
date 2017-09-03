@@ -17,14 +17,15 @@ mod CHEF is
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
- rl  [mac_real] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
- rl  [mac_virt] : virt(MSV, CSV) msv(M MS) => virt(M MSV, CSV) msv(MS) .
- crl [con_virt] : virt(MSV, CSV) cs(C RECIPE) => virt(MSV, C CSV) cs(C RECIPE) 
+ rl  [provision+] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
+*** rl  [provision-] : real(M MSR, CSR) => real(MSR, CSR) .
+ rl  [ops_add] : virt(MSV, CSV) msv(M MS) => virt(M MSV, CSV) msv(MS) .
+ crl [ops_set] : virt(MSV, CSV) cs(C RECIPE) => virt(MSV, C CSV) cs(C RECIPE) 
                   if occurrences(C, CSV) == 0 .
- crl [con_real] : virt(MSV, [X, Y] CSV) real(X Y MSR, CSR)
+ crl [configure+] : virt(MSV, [X, Y] CSV) real(X Y MSR, CSR)
                => virt(MSV, [X, Y] CSV) real(X Y MSR, [X, Y] CSR)
                   if occurrences([X, Y], CSR) == 0 .
- crl [con_del]  : virt(MSV, CSV) real(MSR, C CSR)
+ crl [configure-] : virt(MSV, CSV) real(MSR, C CSR)
                => virt(MSV, CSV) real(MSR, CSR)
                   if occurrences(C, CSV) == 0 .
 
