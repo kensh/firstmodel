@@ -6,12 +6,12 @@ load ../abstract/pair.maude
 
 *** machine
  
-load ../concrete/machine.maude
+load ../role/machine.maude
 load ../view/machine.maude
 
 *** connection
 
-load ../concrete/connection.maude
+load ../role/connection.maude
 load ../view/connection.maude
 
 *** collection
