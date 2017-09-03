@@ -22,10 +22,10 @@ mod CHEF is
  crl [ops_set] : conf(MSV, CSV) cs(C RECIPE) => conf(MSV, C CSV) cs(C RECIPE) 
                   if occurrences(C, CSV) == 0 .
  crl [config+] : conf(MSV, [X, Y] CSV) real(X Y MSR, CSR)
-               => conf(MSV, [X, Y] CSV) real(X Y MSR, [X, Y] CSR)
+              => conf(MSV, [X, Y] CSV) real(X Y MSR, [X, Y] CSR)
                   if occurrences([X, Y], CSR) == 0 .
  crl [config-] : conf(MSV, CSV) real(MSR, C CSR)
-               => conf(MSV, CSV) real(MSR, CSR)
+              => conf(MSV, CSV) real(MSR, CSR)
                   if occurrences(C, CSV) == 0 .
 
 endm
