@@ -3,14 +3,14 @@ load ./model/chef.maude
 select CHEF .
 
 search [1] in CHEF : 
- env(virt(ap(1) ap(3) db(1), [ap(2), db(1)]))
- env(real(ap(1) db(1), [ap(1), db(1)])) 
+ virt(ap(1) ap(3) db(1), [ap(2), db(1)])
+ real(ap(1) db(1), [ap(1), db(1)])
  msv(ap(2) ap(4)) 
  msr(ap(2) ap(3) ap(4)) 
  cs([ap(2), db(1)] [ap(3), db(1)]) 
 =>* 
- env(virt(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)]))
- env(real(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)]))
+ virt(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
+ real(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
  msv(mt) 
  msr(mt)
  cs([ap(2), db(1)] [ap(3), db(1)]) .

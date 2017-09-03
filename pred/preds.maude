@@ -16,7 +16,7 @@ mod PREDS is
  var  C : Pair{Machine, Machine} .
 
 
- eq  env(real(MSR, RECIPE)) cs(RECIPE) S |= cooked = true .
+ eq  real(MSR, RECIPE) cs(RECIPE) S |= cooked = true .
 
 endm
 

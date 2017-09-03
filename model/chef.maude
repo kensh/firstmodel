@@ -4,13 +4,11 @@ mod CHEF is
  pr VIRTUAL .
  pr REAL .
  sort Chef .
- sort Env .
  sorts Var Sys .
  subsort Var < Sys .
- subsorts Virtual Real < Env .
+ subsorts Virtual Real < Var .
 
  op  _ _ : Sys Sys -> Sys [assoc comm] .
- op  env : Env -> Var .
  ops msv msr : Bag{Machine} -> Var .
  op  cs : Bag{Connection} -> Var .
 
@@ -19,15 +17,15 @@ mod CHEF is
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
- rl  [mac_real] : env(real(MSR, CSR)) msr(M MS) => env(real(M MSR, CSR)) msr(MS) .
- rl  [mac_virt] : env(virt(MSV, CSV)) msv(M MS) => env(virt(M MSV, CSV)) msv(MS) .
- crl [con_virt] : env(virt(MSV, CSV)) cs(C RECIPE) => env(virt(MSV, C CSV)) cs(C RECIPE) 
+ rl  [mac_real] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
+ rl  [mac_virt] : virt(MSV, CSV) msv(M MS) => virt(M MSV, CSV) msv(MS) .
+ crl [con_virt] : virt(MSV, CSV) cs(C RECIPE) => virt(MSV, C CSV) cs(C RECIPE) 
                   if occurrences(C, CSV) == 0 .
- crl [con_real] : env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, CSR))
-               => env(virt(MSV, [X, Y] CSV)) env(real(X Y MSR, [X, Y] CSR))
+ crl [con_real] : virt(MSV, [X, Y] CSV) real(X Y MSR, CSR)
+               => virt(MSV, [X, Y] CSV) real(X Y MSR, [X, Y] CSR)
                   if occurrences([X, Y], CSR) == 0 .
- crl [con_del]  : env(virt(MSV, CSV)) env(real(MSR, C CSR))
-               => env(virt(MSV, CSV)) env(real(MSR, CSR))
+ crl [con_del]  : virt(MSV, CSV) real(MSR, C CSR)
+               => virt(MSV, CSV) real(MSR, CSR)
                   if occurrences(C, CSV) == 0 .
 
 endm
