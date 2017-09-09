@@ -1,8 +1,8 @@
-load ../model/chef.maude
+load ../model/model.maude
 in model-checker.maude .
 
 mod PREDS is
- pr CHEF .
+ pr MODEL .
  inc SATISFACTION .
  subsort Sys < State .
  

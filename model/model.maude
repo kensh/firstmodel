@@ -1,9 +1,9 @@
 load ./compile.maude
 
-mod CHEF is
+mod MODEL is
  pr CONFIG .
  pr REAL .
- sort Chef .
+ sort Model .
  sorts Var Sys .
  subsort Var < Sys .
  subsorts Config Real < Var .

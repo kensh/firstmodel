@@ -1,4 +1,4 @@
-mod INIT is pr CHEF .
+mod INIT is pr MODEL .
  op init : -> Sys .
  eq init = 
  conf(ap(1) db(1), [ap(1), db(1)])
