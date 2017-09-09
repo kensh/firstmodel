@@ -10,8 +10,8 @@ mod PREDS is
  
  var S : Sys .
 
- vars CSV CSR RECIPE : Bag{Connection} .
- vars MSV MSR MS : Bag{Machine} .
+ vars CSC CSR RECIPE : Bag{Connection} .
+ vars MSC MSR MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 

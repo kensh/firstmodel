@@ -9,23 +9,23 @@ mod MODEL is
  subsorts Config Real < Var .
 
  op  _ _ : Sys Sys -> Sys [assoc comm] .
- ops msv msr : Bag{Machine} -> Var .
+ ops msc msr : Bag{Machine} -> Var .
  op  cs : Bag{Connection} -> Var .
 
- vars CSV CSR RECIPE : Bag{Connection} .
- vars MSV MSR MS : Bag{Machine} .
+ vars CSC CSR RECIPE : Bag{Connection} .
+ vars MSC MSR MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
  rl  [ops_prv] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
- rl  [ops_add] : conf(MSV, CSV) msv(M MS) => conf(M MSV, CSV) msv(MS) .
- crl [ops_set] : conf(MSV, CSV) cs(C RECIPE) => conf(MSV, C CSV) cs(C RECIPE) 
-                  if occurrences(C, CSV) == 0 .
- crl [config+] : conf(MSV, [X, Y] CSV) real(X Y MSR, CSR)
-              => conf(MSV, [X, Y] CSV) real(X Y MSR, [X, Y] CSR)
+ rl  [ops_add] : conf(MSC, CSC) msc(M MS) => conf(M MSC, CSC) msc(MS) .
+ crl [ops_set] : conf(MSC, CSC) cs(C RECIPE) => conf(MSC, C CSC) cs(C RECIPE) 
+                  if occurrences(C, CSC) == 0 .
+ crl [config+] : conf(MSC, [X, Y] CSC) real(X Y MSR, CSR)
+              => conf(MSC, [X, Y] CSC) real(X Y MSR, [X, Y] CSR)
                   if occurrences([X, Y], CSR) == 0 .
- crl [config-] : conf(MSV, CSV) real(MSR, C CSR)
-              => conf(MSV, CSV) real(MSR, CSR)
-                  if occurrences(C, CSV) == 0 .
+ crl [config-] : conf(MSC, CSC) real(MSR, C CSR)
+              => conf(MSC, CSC) real(MSR, CSR)
+                  if occurrences(C, CSC) == 0 .
 
 endm
