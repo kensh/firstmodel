@@ -17,14 +17,14 @@ mod MODEL is
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
- rl  [ops_prv] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
- rl  [ops_add] : conf(MSC, CSC) msc(M MS) => conf(M MSC, CSC) msc(MS) .
- crl [ops_set] : conf(MSC, CSC) cs(C NEWCONF) => conf(MSC, C CSC) cs(C NEWCONF) 
+ rl  [real_add] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
+ rl  [conf_add] : conf(MSC, CSC) msc(M MS) => conf(M MSC, CSC) msc(MS) .
+ crl [conf_set] : conf(MSC, CSC) cs(C NEWCONF) => conf(MSC, C CSC) cs(C NEWCONF) 
                   if occurrences(C, CSC) == 0 .
- crl [config+] : conf(MSC, [X, Y] CSC) real(X Y MSR, CSR)
+ crl [config++] : conf(MSC, [X, Y] CSC) real(X Y MSR, CSR)
               => conf(MSC, [X, Y] CSC) real(X Y MSR, [X, Y] CSR)
                   if occurrences([X, Y], CSR) == 0 .
- crl [config-] : conf(MSC, CSC) real(MSR, C CSR)
+ crl [config--] : conf(MSC, CSC) real(MSR, C CSR)
               => conf(MSC, CSC) real(MSR, CSR)
                   if occurrences(C, CSC) == 0 .
 
