@@ -12,14 +12,14 @@ mod MODEL is
  ops msc msr : Bag{Machine} -> Var .
  op  cs : Bag{Connection} -> Var .
 
- vars CSC CSR RECIPE : Bag{Connection} .
+ vars CSC CSR NEWCONF : Bag{Connection} .
  vars MSC MSR MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
  rl  [ops_prv] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
  rl  [ops_add] : conf(MSC, CSC) msc(M MS) => conf(M MSC, CSC) msc(MS) .
- crl [ops_set] : conf(MSC, CSC) cs(C RECIPE) => conf(MSC, C CSC) cs(C RECIPE) 
+ crl [ops_set] : conf(MSC, CSC) cs(C NEWCONF) => conf(MSC, C CSC) cs(C NEWCONF) 
                   if occurrences(C, CSC) == 0 .
  crl [config+] : conf(MSC, [X, Y] CSC) real(X Y MSR, CSR)
               => conf(MSC, [X, Y] CSC) real(X Y MSR, [X, Y] CSR)

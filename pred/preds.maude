@@ -10,13 +10,13 @@ mod PREDS is
  
  var S : Sys .
 
- vars CSC CSR RECIPE : Bag{Connection} .
+ vars CSC CSR NEWCONF : Bag{Connection} .
  vars MSC MSR MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
 
- eq  real(MSR, RECIPE) cs(RECIPE) S |= cooked = true .
+ eq  real(MSR, NEWCONF) cs(NEWCONF) S |= cooked = true .
 
 endm
 
