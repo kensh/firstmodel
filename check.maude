@@ -8,11 +8,11 @@ mod CHECK is
  inc PREDS .
  inc MODEL-CHECKER .
  inc LTL-SIMPLIFIER .
- ops convergent : -> Formula .
- eq  convergent = (<> ([] configured)) .
+ ops converged : -> Formula .
+ eq  converged = (<> ([] configured)) .
 endm
 
-red in CHECK : modelCheck(init,convergent) .
-red in CHECK : modelCheck(bug,convergent) .
+red in CHECK : modelCheck(init,converged) .
+red in CHECK : modelCheck(bug, converged) .
 
 quit .
