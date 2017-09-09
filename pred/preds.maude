@@ -6,7 +6,7 @@ mod PREDS is
  inc SATISFACTION .
  subsort Sys < State .
  
- ops cooked : -> Prop .
+ ops configured : -> Prop .
  
  var S : Sys .
 
@@ -16,7 +16,7 @@ mod PREDS is
  var  C : Pair{Machine, Machine} .
 
 
- eq  real(MSR, NEWCONF) cs(NEWCONF) S |= cooked = true .
+ eq  real(MSR, NEWCONF) cs(NEWCONF) S |= configured = true .
 
 endm
 

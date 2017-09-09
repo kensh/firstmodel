@@ -9,7 +9,7 @@ mod CHECK is
  inc MODEL-CHECKER .
  inc LTL-SIMPLIFIER .
  ops convergent : -> Formula .
- eq convergent = (<> ([] cooked)) .
+ eq  convergent = (<> ([] configured)) .
 endm
 
 red in CHECK : modelCheck(init,convergent) .
