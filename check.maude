@@ -1,10 +1,13 @@
 load ./pred/preds.maude
-load ./instance/init.maude
-load ./instance/bug.maude
+load ./instance/success.maude
+load ./instance/less_machines.maude
+load ./instance/wrong_conf.maude
 
 mod CHECK is
- pr INIT .
- pr BUG . 
+ pr SUCCESS .
+ pr LESS_MACHINES .
+ pr WRONG_CONF .
+ 
  inc PREDS .
  inc MODEL-CHECKER .
  inc LTL-SIMPLIFIER .
@@ -12,7 +15,8 @@ mod CHECK is
  eq  converged = (<> ([] configured)) .
 endm
 
-red in CHECK : modelCheck(init,converged) .
-red in CHECK : modelCheck(bug, converged) .
+red in CHECK : modelCheck(success, converged) .
+red in CHECK : modelCheck(less-machines, converged) .
+red in CHECK : modelCheck(wrong-conf, converged) .
 
 quit .

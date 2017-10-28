@@ -1,6 +1,6 @@
-mod INIT is pr MODEL .
- op init : -> Sys .
- eq init = 
+mod SUCCESS is pr MODEL .
+ op success : -> Sys .
+ eq success = 
  conf(ap(1) db(1), [ap(1), db(1)])
  real(ap(1) db(1), [ap(1), db(1)]) 
  msc(ap(2) ap(3) ap(4)) 
