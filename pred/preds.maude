@@ -6,17 +6,14 @@ mod PREDS is
  inc SATISFACTION .
  subsort Sys < State .
  
- ops configured : -> Prop .
+ op configured : -> Prop .
  
  var S : Sys .
 
- vars CSC CSR NEWCONF : Bag{Connection} .
- vars MSC MSR MS : Bag{Machine} .
- vars M X Y : Machine .
- var  C : Pair{Machine, Machine} .
+ vars SCRIPT_CON : Bag{Connection} .
+ vars MSC MSR : Bag{Machine} .
 
-
- eq  real(MSR, NEWCONF) cs(NEWCONF) S |= configured = true .
+ eq  cloud(MSR, SCRIPT_CON) script(MSC, SCRIPT_CON) cs(SCRIPT_CON) S |= configured = true .
 
 endm
 

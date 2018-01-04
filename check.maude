@@ -2,11 +2,13 @@ load ./pred/preds.maude
 load ./instance/success.maude
 load ./instance/less_machines.maude
 load ./instance/wrong_conf.maude
+load ./instance/idempotent.maude
 
 mod CHECK is
  pr SUCCESS .
  pr LESS_MACHINES .
  pr WRONG_CONF .
+ pr IDEMPOTENT .
  
  inc PREDS .
  inc MODEL-CHECKER .
@@ -18,5 +20,6 @@ endm
 red in CHECK : modelCheck(success, converged) .
 red in CHECK : modelCheck(less-machines, converged) .
 red in CHECK : modelCheck(wrong-conf, converged) .
+red in CHECK : modelCheck(idempotent, converged) .
 
 quit .

@@ -1,8 +1,0 @@
-mod CONFIG is
- pr CONNECTIONS .
- pr MACHINES .
- sort Config .
-
- op conf : Bag{Machine} Bag{Connection} -> Config [ctor] .
- 
-endm

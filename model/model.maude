@@ -1,31 +1,31 @@
 load ./compile.maude
 
 mod MODEL is
- pr CONFIG .
- pr REAL .
+ pr SCRIPT .
+ pr CLOUD .
  sort Model .
  sorts Var Sys .
  subsort Var < Sys .
- subsorts Config Real < Var .
+ subsorts Script Cloud < Var .
 
  op  _ _ : Sys Sys -> Sys [assoc comm] .
- ops msc msr : Bag{Machine} -> Var .
+ ops mss msc : Bag{Machine} -> Var .
  op  cs : Bag{Connection} -> Var .
 
- vars CSC CSR NEWCONF : Bag{Connection} .
+ vars CSC CSR SCRIPT_CON : Bag{Connection} .
  vars MSC MSR MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
- rl  [real_add] : real(MSR, CSR) msr(M MS) => real(M MSR, CSR) msr(MS) .
- rl  [conf_add] : conf(MSC, CSC) msc(M MS) => conf(M MSC, CSC) msc(MS) .
- crl [conf_set] : conf(MSC, CSC) cs(C NEWCONF) => conf(MSC, C CSC) cs(C NEWCONF) 
+ rl  [cloud_occure] : cloud(MSR, CSR) msc(M MS) => cloud(M MSR, CSR) msc(MS) .
+ rl  [script_occure] : script(MSC, CSC) mss(M MS) => script(M MSC, CSC) mss(MS) .
+ crl [script_con] : script(MSC, CSC) cs(C SCRIPT_CON) => script(MSC, C CSC) cs(C SCRIPT_CON) 
                   if occurrences(C, CSC) == 0 .
- crl [config++] : conf(MSC, [X, Y] CSC) real(X Y MSR, CSR)
-              => conf(MSC, [X, Y] CSC) real(X Y MSR, [X, Y] CSR)
+ crl [config++] : script(MSC, [X, Y] CSC) cloud(X Y MSR, CSR)
+              => script(MSC, [X, Y] CSC) cloud(X Y MSR, [X, Y] CSR)
                   if occurrences([X, Y], CSR) == 0 .
- crl [config--] : conf(MSC, CSC) real(MSR, C CSR)
-              => conf(MSC, CSC) real(MSR, CSR)
+ crl [config--] : script(MSC, CSC) cloud(MSR, C CSR)
+              => script(MSC, CSC) cloud(MSR, CSR)
                   if occurrences(C, CSC) == 0 .
 
 endm

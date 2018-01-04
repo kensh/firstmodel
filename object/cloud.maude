@@ -1,0 +1,8 @@
+mod CLOUD is
+ pr CONNECTIONS .
+ pr MACHINES .
+ sort Cloud . 
+ 
+ op cloud : Bag{Machine} Bag{Connection} -> Cloud [ctor] .
+
+endm

@@ -3,16 +3,16 @@ load ./model/model.maude
 select MODEL .
 
 search [1] in MODEL : 
- conf(ap(1) ap(3) db(1), [ap(2), db(1)])
- real(ap(1) db(1), [ap(1), db(1)])
- msc(ap(2) ap(4)) 
- msr(ap(2) ap(3) ap(4)) 
+ script(ap(1) ap(3) db(1), [ap(2), db(1)])
+ cloud(ap(1) db(1), [ap(1), db(1)])
+ mss(ap(2) ap(4)) 
+ msc(ap(2) ap(3) ap(4)) 
  cs([ap(2), db(1)] [ap(3), db(1)]) 
 =>* 
- conf(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
- real(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
- msc(mt) 
- msr(mt)
+ script(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
+ cloud(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
+ mss(mt) 
+ msc(mt)
  cs([ap(2), db(1)] [ap(3), db(1)]) .
 
 

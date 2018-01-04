@@ -1,0 +1,8 @@
+mod SCRIPT is
+ pr CONNECTIONS .
+ pr MACHINES .
+ sort Script .
+
+ op script : Bag{Machine} Bag{Connection} -> Script [ctor] .
+ 
+endm
