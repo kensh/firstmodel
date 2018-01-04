@@ -15,6 +15,8 @@ search [1] in MODEL :
  msc(mt)
  cs([ap(2), db(1)] [ap(3), db(1)]) .
 
+show path 239 .
+
 
 quit .
 
