@@ -9,17 +9,17 @@ mod MODEL is
  subsorts Script Cloud < Var .
 
  op  _ _ : Sys Sys -> Sys [assoc comm] .
- ops vm_script vm_cloud : Bag{Machine} -> Var .
+ ops vm-script vm-cloud : Bag{Machine} -> Var .
  op  design : Bag{Connection} -> Var .
 
- vars CSC CSR SCRIPT_CON : Bag{Connection} .
+ vars CSC CSR SCRIPTCON : Bag{Connection} .
  vars MSC MSR MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
- rl  [cloud_occure] : cloud(MSR, CSR) vm_cloud(M MS) => cloud(M MSR, CSR) vm_cloud(MS) .
- rl  [script_occure] : script(MSC, CSC) vm_script(M MS) => script(M MSC, CSC) vm_script(MS) .
- crl [script_con] : script(MSC, CSC) design(C SCRIPT_CON) => script(MSC, C CSC) design(C SCRIPT_CON) 
+ rl  [cloud_occure] : cloud(MSR, CSR) vm-cloud(M MS) => cloud(M MSR, CSR) vm-cloud(MS) .
+ rl  [script_occure] : script(MSC, CSC) vm-script(M MS) => script(M MSC, CSC) vm-script(MS) .
+ crl [script_con] : script(MSC, CSC) design(C SCRIPTCON) => script(MSC, C CSC) design(C SCRIPTCON) 
                   if occurrences(C, CSC) == 0 .
  crl [config++] : script(MSC, [X, Y] CSC) cloud(X Y MSR, CSR)
               => script(MSC, [X, Y] CSC) cloud(X Y MSR, [X, Y] CSR)
