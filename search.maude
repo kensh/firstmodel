@@ -5,15 +5,17 @@ select MODEL .
 search [1] in MODEL : 
  script(ap(1) ap(3) db(1), [ap(2), db(1)])
  cloud(ap(1) db(1), [ap(1), db(1)])
- mss(ap(2) ap(4)) 
- msc(ap(2) ap(3) ap(4)) 
- cs([ap(2), db(1)] [ap(3), db(1)]) 
+ vm_script(ap(2) ap(4)) 
+ vm_cloud(ap(2) ap(3) ap(4)) 
+ design([ap(2), db(1)] [ap(3), db(1)]) 
 =>* 
  script(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
  cloud(ap(1) ap(2) ap(3) ap(4) db(1), [ap(2), db(1)] [ap(3), db(1)])
- mss(mt) 
- msc(mt)
- cs([ap(2), db(1)] [ap(3), db(1)]) .
+ vm_script(mt) 
+ vm_cloud(mt)
+ design([ap(2), db(1)] [ap(3), db(1)])
+ .
+ ***such that  .
 
 show path 239 .
 
@@ -34,13 +36,13 @@ search [1] in CHEF :
  env(real(ap(1) db(1), [ap(1), db(1)])) 
  ms(ap(2)) 
  ms(ap(2)) 
- cs([ap(2), db(1)]) 
+ design([ap(2), db(1)]) 
 =>* 
  env(virt(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]))
  env(real(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]))
  ms(mt) 
  ms(mt)
- cs(mt) .
+ design(mt) .
  
 
 show path 14 .
