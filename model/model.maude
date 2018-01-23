@@ -12,20 +12,20 @@ mod MODEL is
  ops vm-script vm-cloud : Bag{Machine} -> Var .
  op  design : Bag{Connection} -> Var .
 
- vars CSC CSR SCRIPTCON : Bag{Connection} .
- vars MSC MSR MS : Bag{Machine} .
+ vars SCRIPT-CON CLOUD-CON DESIGN-CON : Bag{Connection} .
+ vars SCRIPT-VM CLOUD-VM MS : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
- rl  [cloud_occure] : cloud(MSR, CSR) vm-cloud(M MS) => cloud(M MSR, CSR) vm-cloud(MS) .
- rl  [script_occure] : script(MSC, CSC) vm-script(M MS) => script(M MSC, CSC) vm-script(MS) .
- crl [script_con] : script(MSC, CSC) design(C SCRIPTCON) => script(MSC, C CSC) design(C SCRIPTCON) 
-                  if occurrences(C, CSC) == 0 .
- crl [config++] : script(MSC, [X, Y] CSC) cloud(X Y MSR, CSR)
-              => script(MSC, [X, Y] CSC) cloud(X Y MSR, [X, Y] CSR)
-                  if occurrences([X, Y], CSR) == 0 .
- crl [config--] : script(MSC, CSC) cloud(MSR, C CSR)
-              => script(MSC, CSC) cloud(MSR, CSR)
-                  if occurrences(C, CSC) == 0 .
+ rl  [cloud_occure] : cloud(CLOUD-VM, CLOUD-CON) vm-cloud(M MS) => cloud(M CLOUD-VM, CLOUD-CON) vm-cloud(MS) .
+ rl  [script_occure] : script(SCRIPT-VM, SCRIPT-CON) vm-script(M MS) => script(M SCRIPT-VM, SCRIPT-CON) vm-script(MS) .
+ crl [script_con] : script(SCRIPT-VM, SCRIPT-CON) design(C DESIGN-CON) => script(SCRIPT-VM, C SCRIPT-CON) design(C DESIGN-CON) 
+                  if occurrences(C, SCRIPT-CON) == 0 .
+ crl [config++] : script(SCRIPT-VM, [X, Y] SCRIPT-CON) cloud(X Y CLOUD-VM, CLOUD-CON)
+              => script(SCRIPT-VM, [X, Y] SCRIPT-CON) cloud(X Y CLOUD-VM, [X, Y] CLOUD-CON)
+                  if occurrences([X, Y], CLOUD-CON) == 0 .
+ crl [config--] : script(SCRIPT-VM, SCRIPT-CON) cloud(CLOUD-VM, C CLOUD-CON)
+              => script(SCRIPT-VM, SCRIPT-CON) cloud(CLOUD-VM, CLOUD-CON)
+                  if occurrences(C, SCRIPT-CON) == 0 .
 
 endm

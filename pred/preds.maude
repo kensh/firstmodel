@@ -11,9 +11,9 @@ mod PREDS is
  var S : Sys .
 
  vars SCRIPT_CON : Bag{Connection} .
- vars MSC MSR : Bag{Machine} .
+ vars SCRIPT-VM CLOUD-VM : Bag{Machine} .
 
- eq  cloud(MSR, SCRIPT_CON) script(MSC, SCRIPT_CON) cs(SCRIPT_CON) S |= configured = true .
+ eq  cloud(CLOUD-VM, SCRIPT_CON) script(SCRIPT-VM, SCRIPT_CON) design(SCRIPT_CON) S |= configured = true .
 
 endm
 

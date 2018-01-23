@@ -3,8 +3,8 @@ mod IDEMPOTENT is pr MODEL .
  eq idempotent = 
  script(ap(1) ap(2) ap(3) ap(4) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(4), db(1)]) 
  cloud(ap(1) db(1), [ap(1), db(1)]) 
- mss(ap(2) ap(3) ap(4)) 
- msc(ap(2) ap(3) ap(4)) 
- cs([ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(4), db(1)]) .
+ vm-script(ap(2) ap(3) ap(4)) 
+ vm-cloud(ap(2) ap(3) ap(4)) 
+ design([ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(4), db(1)]) .
 
 endm
