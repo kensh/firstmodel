@@ -17,8 +17,8 @@ mod MODEL is
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
 
- rl  [cloud_occure] : cloud(CLOUD-VM, CLOUD-CON) vm-cloud(M MS) => cloud(M CLOUD-VM, CLOUD-CON) vm-cloud(MS) .
- rl  [script_occure] : script(SCRIPT-VM, SCRIPT-CON) vm-script(M MS) => script(M SCRIPT-VM, SCRIPT-CON) vm-script(MS) .
+ rl  [cloud_vm] : cloud(CLOUD-VM, CLOUD-CON) vm-cloud(M MS) => cloud(M CLOUD-VM, CLOUD-CON) vm-cloud(MS) .
+ rl  [script_vm] : script(SCRIPT-VM, SCRIPT-CON) vm-script(M MS) => script(M SCRIPT-VM, SCRIPT-CON) vm-script(MS) .
  crl [script_con] : script(SCRIPT-VM, SCRIPT-CON) design(C DESIGN-CON) => script(SCRIPT-VM, C SCRIPT-CON) design(C DESIGN-CON) 
                   if occurrences(C, SCRIPT-CON) == 0 .
  crl [config++] : script(SCRIPT-VM, [X, Y] SCRIPT-CON) cloud(X Y CLOUD-VM, CLOUD-CON)
