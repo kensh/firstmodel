@@ -9,23 +9,27 @@ mod MODEL is
  subsorts Script Cloud < Var .
 
  op  _ _ : Sys Sys -> Sys [assoc comm] .
- ops vm-script vm-cloud : Bag{Machine} -> Var .
- op  design : Bag{Connection} -> Var .
 
- vars SCRIPT-CON CLOUD-CON DESIGN-CON : Bag{Connection} .
- vars SCRIPT-VM CLOUD-VM MS : Bag{Machine} .
+ vars CONS1 CONS2 : Bag{Connection} .
+ vars VMS1 VMS2 : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
+ var  s : Sys .
 
- rl  [add_vm_cloud] : cloud(CLOUD-VM, CLOUD-CON) vm-cloud(M MS) => cloud(M CLOUD-VM, CLOUD-CON) vm-cloud(MS) .
- rl  [add_vm_script] : script(SCRIPT-VM, SCRIPT-CON) vm-script(M MS) => script(M SCRIPT-VM, SCRIPT-CON) vm-script(MS) .
- crl [add_con_script] : script(SCRIPT-VM, SCRIPT-CON) design(C DESIGN-CON) => script(SCRIPT-VM, C SCRIPT-CON) design(C DESIGN-CON) 
-                  if occurrences(C, SCRIPT-CON) == 0 .
- crl [config++] : script(SCRIPT-VM, [X, Y] SCRIPT-CON) cloud(X Y CLOUD-VM, CLOUD-CON)
-              => script(SCRIPT-VM, [X, Y] SCRIPT-CON) cloud(X Y CLOUD-VM, [X, Y] CLOUD-CON)
-                  if occurrences([X, Y], CLOUD-CON) == 0 .
- crl [config--] : script(SCRIPT-VM, SCRIPT-CON) cloud(CLOUD-VM, C CLOUD-CON)
-              => script(SCRIPT-VM, SCRIPT-CON) cloud(CLOUD-VM, CLOUD-CON)
-                  if occurrences(C, SCRIPT-CON) == 0 .
+ crl [mk_vm] : cloud(VMS1, CONS1) script(M VMS2, CONS2) => cloud(M VMS1, CONS1) script(M VMS2, CONS2) 
+                  if occurrences(M, VMS1) == 0 .
+
+ crl [rm_vm] : cloud(M VMS1, CONS1) script(VMS2, CONS2) => cloud(VMS1, CONS1) script(VMS2, CONS2) 
+                  if occurrences(M, VMS2) == 0 .
+
+ crl [mk_con] : cloud(X Y VMS1, CONS1) script(VMS2, [X, Y] CONS2) => cloud(X Y VMS1, [X, Y] CONS1) script(VMS2, [X, Y] CONS2) 
+                  if occurrences([X, Y], CONS1) == 0 .
+
+ crl [rm_con] : cloud(VMS1, C CONS1) script(VMS2, CONS2) => cloud(VMS1, CONS1) script(VMS2, CONS2) 
+                  if occurrences(C, CONS2) == 0 .
+
+ rl [stable] : s => s . 
+
+
 
 endm

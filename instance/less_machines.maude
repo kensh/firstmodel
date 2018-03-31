@@ -1,10 +1,9 @@
 mod LESS_MACHINES is pr MODEL .
  op less-machines : -> Sys .
- eq less-machines = 
+
+ eq less-machines =  
  script(ap(1) db(1), [ap(1), db(1)])
  cloud(ap(1) db(1), [ap(1), db(1)])
- vm-script(ap(2) ap(3) ap(4)) 
- vm-cloud(ap(2) ap(3) ) 
- design([ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(4), db(1)]) .
+ .
 
 endm

@@ -10,10 +10,10 @@ mod PREDS is
  
  var S : Sys .
 
- vars SCRIPT_CON : Bag{Connection} .
- vars SCRIPT-VM CLOUD-VM : Bag{Machine} .
+ vars CONS : Bag{Connection} .
+ vars VMS : Bag{Machine} .
 
- eq  cloud(CLOUD-VM, SCRIPT_CON) script(SCRIPT-VM, SCRIPT_CON) design(SCRIPT_CON) S |= configured = true .
+ eq  cloud(VMS, CONS) script(VMS, CONS) S |= configured = true .
 
 endm
 
