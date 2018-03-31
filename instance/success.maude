@@ -2,8 +2,8 @@ mod SUCCESS is pr MODEL .
  op success : -> Sys .
 
  eq success = 
- script(ap(1) db(1), [ap(1), db(1)])
- cloud(ap(1) ap(2) ap(3) ap(4) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(4), db(1)]) 
+ script(ap(1) ap(2) ap(3) ap(4) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(4), db(1)]) 
+ cloud(ap(1) db(1), [ap(1), db(1)])
  .
 
 endm
