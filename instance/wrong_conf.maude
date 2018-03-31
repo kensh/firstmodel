@@ -1,7 +1,7 @@
 mod WRONG_CONF is pr MODEL .
  op wrong-conf : -> Sys .
- eq wrong-conf = 
 
+ eq wrong-conf = 
  script(ap(1) db(1), [ap(1), db(1)])
  cloud(ap(1) db(1), [ap(1), db(1)])
  .

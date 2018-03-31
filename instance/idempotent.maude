@@ -1,7 +1,7 @@
 mod IDEMPOTENT is pr MODEL .
  op idempotent : -> Sys .
- eq idempotent = 
 
+ eq idempotent = 
  script(ap(1) ap(2) ap(3) ap(4) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)] [ap(4), db(1)]) 
  cloud(ap(1) db(1), [ap(1), db(1)]) 
  .
