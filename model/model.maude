@@ -3,6 +3,7 @@ load ./compile.maude
 mod MODEL is
  pr SCRIPT .
  pr CLOUD .
+
  sort Model .
  sorts Var Sys .
  subsort Var < Sys .
@@ -14,7 +15,7 @@ mod MODEL is
  vars VMS1 VMS2 : Bag{Machine} .
  vars M X Y : Machine .
  var  C : Pair{Machine, Machine} .
- var  s : Sys .
+ var  s : Var .
 
  crl [mk_vm] : cloud(VMS1, CONS1) script(M VMS2, CONS2) => cloud(M VMS1, CONS1) script(M VMS2, CONS2) 
                   if occurrences(M, VMS1) == 0 .
@@ -27,9 +28,5 @@ mod MODEL is
 
  crl [rm_con] : cloud(VMS1, C CONS1) script(VMS2, CONS2) => cloud(VMS1, CONS1) script(VMS2, CONS2) 
                   if occurrences(C, CONS2) == 0 .
-
- rl [stable] : s => s . 
-
-
 
 endm

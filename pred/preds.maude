@@ -8,12 +8,10 @@ mod PREDS is
  
  op configured : -> Prop .
  
- var S : Sys .
-
  vars CONS : Bag{Connection} .
  vars VMS : Bag{Machine} .
 
- eq  cloud(VMS, CONS) script(VMS, CONS) S |= configured = true .
+ eq  cloud(VMS, CONS) script(VMS, CONS) |= configured = true .
 
 endm
 
