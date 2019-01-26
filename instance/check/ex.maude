@@ -1,0 +1,20 @@
+mod EX is pr MODEL .
+ op ex1 : -> Sys .
+ op ex2 : -> Sys .
+ op ex3 : -> Sys .
+
+ eq ex1 = 
+ script(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)]) 
+ cloud(ap(1) db(1), mt )
+ .
+
+ eq ex2 = 
+ script(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(3), db(1)]) 
+ cloud(ap(1) db(1), mt )
+ .
+
+ eq ex3 = 
+ script(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(2)]) 
+ cloud(ap(1) db(1), mt )
+ .
+endm

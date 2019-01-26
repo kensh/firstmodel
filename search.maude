@@ -1,7 +1,7 @@
 load ./model/model.maude
 
 select MODEL .
-
+***(
 search [1] in MODEL : 
  script(ap(1) ap(2) ap(3) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)])
  cloud(ap(1) db(1), [ap(1), db(1)])
@@ -10,5 +10,37 @@ search [1] in MODEL :
  cloud(ap(1) ap(2) ap(3) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)]) .
 
 show path 8 .
+
+search [1] in MODEL : 
+ script(ap(1) ap(2) ap(3) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)])
+ cloud(ap(1) db(1), [ap(1), db(1)])
+=>* 
+ script(ap(1) ap(2) ap(3) db(1), [ap(1), db(1)] [ap(2), db(1)])
+ cloud(ap(1) ap(2) ap(3) db(1), [ap(1), db(1)] [ap(2), db(1)] [ap(3), db(1)]) .
+)
+
+
+
+search [1] in MODEL : 
+ script(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)])
+ cloud(ap(1) db(1), mt)
+=>* 
+ script(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)])
+ cloud(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)])
+ .
+
+show path 5 .
+
+
+
+search [1] in MODEL : 
+ script(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(2)])
+ cloud(ap(1) db(1), mt)
+=>* 
+ script(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(2)])
+ cloud(ap(1) ap(2) db(1), [ap(1), db(1)] [ap(2), db(1)])
+ .
+
+
 
 quit .
